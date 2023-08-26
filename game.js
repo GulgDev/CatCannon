@@ -165,7 +165,8 @@ class Game {
         let deltaTime = (now - this.#lastUpdate) / 1000;
         this.#lastUpdate = now;
 
-        LAND_COOLDOWN.innerText = this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
+        this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
+        LAND_COOLDOWN.innerText = Math.round(this.#landCooldown);
         if (this.#landCooldown == 0) {
             LAND_COOLDOWN.style.display = "none";
             if (LAND_BUTTON.classList.contains("unavailable"))
