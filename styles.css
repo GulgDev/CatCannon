@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    background-color: hsl(180, 100%, 33%);
+}
+
+p {
+    margin: 0;
+    color: white;
+    font-family: sans-serif;
+}
+
+#game-container, #loading-screen {
+    width: 100%;
+    height: 100%;
+}
+
+#game-container {
+    display: none;
+}
+
+#game-canvas {
+    position: absolute;
+    image-rendering: pixelated;
+}
+
+#score-container {
+    position: absolute;
+    top: 8px;
+    right: 24px;
+    border-image: url(images/container.png);
+    border-image-slice: 25% fill;
+    border-image-width: 20px;
+    width: 240px;
+    height: 80px;
+}
+
+#best-score-cup-icon {
+    position: absolute;
+    top: 25%;
+    left: 12px;
+    -ms-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+}
+
+#best-score {
+    position: absolute;
+    top: 25%;
+    left: 48px;
+    -ms-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    color: gray;
+    font-size: 24px;
+}
+
+#score {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    -ms-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    font-size: 40px;
+}
+
+#idle-time {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+}
+
+#game-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%) rotate(-90deg);
+    -webkit-transform: translate(-50%, -50%) rotate(-90deg);
+    transform: translate(-50%, -50%) rotate(-90deg);
+    image-rendering: pixelated;
+}
+
+#play-button {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: calc(50% + 48px);
+    left: calc(50% + 48px);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    image-rendering: pixelated;
+}
+
+#land-button {
+    cursor: pointer;
+    position: absolute;
+    top: 32px;
+    left: 32px;
+}
+
+.unavailable {
+    cursor: not-allowed !important;
+    -webkit-filter: brightness(0.5);
+    filter: brightness(0.5);
+}
+
+.sprite {
+    display: none;
+}
+
+.game-icon-loading {
+    -moz-animation: spin 4s linear infinite;
+    -webkit-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
+    -moz-transform-origin: 46% 50%;
+    -webkit-transform-origin: 46% 50%;
+    transform-origin: 46% 50%;
+}
+
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: translate(-50%, -50%);
+    }
+
+    100% {
+        -moz-transform: translate(-50%, -50%) rotate(360deg);
+    } 
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+    }
+
+    100% {
+        -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    } 
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    100% { 
+        -webkit-transform: translate(-50%, -50%) rotate(360deg);
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+    
+
+@media screen and (orientation:portrait) {
+    #game-canvas {
+        top: 50%;
+        -ms-transform: translate(0, -50%);
+        -webkit-transform: translate(0, -50%);
+        transform: translate(0, -50%);
+        width: 100%;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    #game-canvas {
+        left: 50%;
+        -ms-transform: translate(-50%, 0);
+        -webkit-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+        height: 100%;
+    }
+}

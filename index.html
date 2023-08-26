@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cat cannon</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <div id="game-container">
+            <div id="score-container">
+                <p id="score">0</p>
+                <p id="best-score">0</p>
+                <img id="best-score-cup-icon" width="32px" height="32px" src="images/cup.png">
+            </div>
+            <p id="idle-time">0</p>
+            <img id="land-button" src="images/land.png" width="64px" height="64px">
+            <canvas id="game-canvas" width="1920" height="1280"></canvas>
+        </div>
+        <div id="loading-screen">
+            <img id="game-icon" class="game-icon-loading" width="128px" height="128px" src="images/cat.png">
+            <img id="play-button" width="64px" height="64px" src="images/play.png">
+        </div>
+        <img id="cat-sprite" class="sprite" src="images/cat.png">
+        <img id="ground-sprite" class="sprite" src="images/ground.png">
+        <img id="cannon-wheel-sprite" class="sprite" src="images/cannon-wheel.png">
+        <img id="cannon-sprite" class="sprite" src="images/cannon.png">
+        <img id="trampoline-sprite" class="sprite" src="images/trampoline.png">
+        <img id="puddle-sprite" class="sprite" src="images/puddle.png">
+        <img id="clew-sprite" class="sprite" src="images/clew.png">
+        <audio id="music" src="audios/music.mp3" loop></audio>
+        <audio id="meow-sound" src="audios/meow.mp3"></audio>
+        <audio id="cannon-sound" src="audios/cannon.mp3"></audio>
+        <audio id="land-sound" src="audios/land.mp3"></audio>
+        <audio id="trampoline-1-sound" src="audios/trampoline-1.mp3"></audio>
+        <audio id="trampoline-2-sound" src="audios/trampoline-2.mp3"></audio>
+        <audio id="puddle-1-sound" src="audios/puddle-1.mp3"></audio>
+        <audio id="puddle-2-sound" src="audios/puddle-2.mp3"></audio>
+        <audio id="puddle-3-sound" src="audios/puddle-3.mp3"></audio>
+        <audio id="puddle-4-sound" src="audios/puddle-4.mp3"></audio>
+        <audio id="puddle-5-sound" src="audios/puddle-5.mp3"></audio>
+        <audio id="happy-meow-sound" src="audios/happy-meow.mp3"></audio>
+        <script type="text/javascript" src="game.js"></script>
+    </body>
+</html>
