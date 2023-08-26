@@ -104,6 +104,17 @@ p {
     left: 32px;
 }
 
+#land-cooldown {
+    display: none;
+    position: absolute;
+    top: 112px;
+    left: 64px;
+    -ms-transform: translate(-50%, 0);
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    font-size: 32px;
+}
+
 .unavailable {
     cursor: not-allowed !important;
     -webkit-filter: brightness(0.5);
