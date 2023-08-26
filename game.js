@@ -57,6 +57,7 @@ const BEST_SCORE = document.getElementById("best-score");
 const IDLE_TIME = document.getElementById("idle-time");
 
 const LAND_BUTTON = document.getElementById("land-button");
+const LAND_COOLDOWN = document.getElementById("land-cooldown");
 
 const UPDATE_DISTANCE = 256;
 
@@ -145,7 +146,7 @@ class Game {
         if (this.#landCooldown > 0 || !this.#isCatLaunched)
             return;
         LAND_SOUND.play();
-        this.#landCooldown = 16;
+        this.#landCooldown = 12;
         this.#cat.velocityY = Math.max(this.#cat.velocityY, 0) + LAND_VELOCITY;
     }
 
@@ -164,14 +165,17 @@ class Game {
         let deltaTime = (now - this.#lastUpdate) / 1000;
         this.#lastUpdate = now;
 
-        this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
+        LAND_COOLDOWN.innerText = this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
         if (this.#landCooldown == 0) {
+            LAND_COOLDOWN.style.display = "none";
             if (LAND_BUTTON.classList.contains("unavailable"))
                 LAND_BUTTON.classList.remove("unavailable");
         }
-        else
+        else {
+            LAND_COOLDOWN.style.display = "block";
             if (!LAND_BUTTON.classList.contains("unavailable"))
                 LAND_BUTTON.classList.add("unavailable");
+        }
 
         let previousCatX = Math.round(this.#cat.positionX);
         let previousCatY = Math.round(this.#cat.positionY);
