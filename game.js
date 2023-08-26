@@ -137,10 +137,8 @@ class Game {
         if (ev.code == "Space" || ev.code == "Enter")
             if (this.#isCatLaunched)
                 this.land();
-            else {
-                this.#isCatLaunched = true;
-                this.#cannon.launch();
-            }
+            else
+                this.launchCat();
     }
 
     land() {
@@ -149,6 +147,13 @@ class Game {
         LAND_SOUND.play();
         this.#landCooldown = 16;
         this.#cat.velocityY = Math.max(this.#cat.velocityY, 0) + LAND_VELOCITY;
+    }
+
+    launchCat() {
+        if (this.#isCatLaunched)
+            return;
+        this.#isCatLaunched = true;
+        this.#cannon.launch();
     }
 
     #update() {
@@ -458,5 +463,6 @@ window.onload = () => {
         window.onbeforeunload = game.stop.bind(game);
 
         LAND_BUTTON.addEventListener("click", game.land.bind(game));
+        CANVAS.addEventListener("click", game.launchCat.bind(game));
     });
 };
