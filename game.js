@@ -88,8 +88,6 @@ class Game {
             return Game.#instance;
         Game.#instance = this;
 
-        this.#lastUpdate = Date.now();
-
         this.#cat = new Cat();
         this.#cannon = new Cannon(this.#cat);
 
@@ -114,6 +112,7 @@ class Game {
         this.#landCooldown = 0;
         this.#score = 0;
         this.#isCatLaunched = false;
+        this.#lastUpdate = Date.now();
         this.#addObject(768);
         this.#cat.init();
         this.#cannon.init();
