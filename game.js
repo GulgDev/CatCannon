@@ -112,11 +112,10 @@ class Game {
         this.#landCooldown = 0;
         this.#score = 0;
         this.#isCatLaunched = false;
-        this.#lastUpdate = Date.now();
         this.#addObject(768);
         this.#cat.init();
         this.#cannon.init();
-        this.#isGameRunning = true;
+        this.resume();
     }
 
     stop() {
@@ -124,8 +123,17 @@ class Game {
             BEST_SCORE.innerText = this.#bestScore = this.#score;
             localStorage.setItem("bestScore", this.#bestScore);
         }
-        this.#isGameRunning = false;
+        this.pause();
         this.#objects = [];
+    }
+
+    pause() {
+        this.#isGameRunning = false;
+    }
+
+    resume() {
+        this.#lastUpdate = Date.now();
+        this.#isGameRunning = true;
     }
 
     #restart() {
@@ -157,48 +165,47 @@ class Game {
     }
 
     #update() {
-        if (!this.#isGameRunning)
-            return;
-
-        let now = Date.now();
-        let deltaTime = (now - this.#lastUpdate) / 1000;
-        this.#lastUpdate = now;
-
-        this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
-        LAND_COOLDOWN.innerText = Math.round(this.#landCooldown);
-        if (this.#landCooldown == 0) {
-            LAND_COOLDOWN.style.display = "none";
-            if (LAND_BUTTON.classList.contains("unavailable"))
-                LAND_BUTTON.classList.remove("unavailable");
-        }
-        else {
-            LAND_COOLDOWN.style.display = "block";
-            if (!LAND_BUTTON.classList.contains("unavailable"))
-                LAND_BUTTON.classList.add("unavailable");
-        }
-
-        let previousCatX = Math.round(this.#cat.positionX);
-        let previousCatY = Math.round(this.#cat.positionY);
-
-        this.#cannon.update(deltaTime, this.#isCatLaunched);
-        this.#cat.update(deltaTime);
-        this.#updateCamera();
-        this.#updateBackground();
-        this.#updateScore();
-        this.#updateObjects();
-
-        if (Math.round(this.#cat.positionX) == previousCatX && Math.round(this.#cat.positionY) == previousCatY) {
-            this.#idleTime += deltaTime;
-            if (this.#idleTime >= 2) {
-                IDLE_TIME.innerText = Math.round(7 - this.#idleTime);
-                IDLE_TIME.style.display = "block";
+        if (this.#isGameRunning) {
+            let now = Date.now();
+            let deltaTime = (now - this.#lastUpdate) / 1000;
+            this.#lastUpdate = now;
+    
+            this.#landCooldown = Math.max(this.#landCooldown - deltaTime, 0);
+            LAND_COOLDOWN.innerText = Math.round(this.#landCooldown);
+            if (this.#landCooldown == 0) {
+                LAND_COOLDOWN.style.display = "none";
+                if (LAND_BUTTON.classList.contains("unavailable"))
+                    LAND_BUTTON.classList.remove("unavailable");
             }
-            if (this.#idleTime >= 7)
-                this.#restart();
-        }
-        else {
-            this.#idleTime = 0;
-            IDLE_TIME.style.display = "none";
+            else {
+                LAND_COOLDOWN.style.display = "block";
+                if (!LAND_BUTTON.classList.contains("unavailable"))
+                    LAND_BUTTON.classList.add("unavailable");
+            }
+    
+            let previousCatX = Math.round(this.#cat.positionX);
+            let previousCatY = Math.round(this.#cat.positionY);
+    
+            this.#cannon.update(deltaTime, this.#isCatLaunched);
+            this.#cat.update(deltaTime);
+            this.#updateCamera();
+            this.#updateBackground();
+            this.#updateScore();
+            this.#updateObjects();
+    
+            if (Math.round(this.#cat.positionX) == previousCatX && Math.round(this.#cat.positionY) == previousCatY) {
+                this.#idleTime += deltaTime;
+                if (this.#idleTime >= 2) {
+                    IDLE_TIME.innerText = Math.round(7 - this.#idleTime);
+                    IDLE_TIME.style.display = "block";
+                }
+                if (this.#idleTime >= 7)
+                    this.#restart();
+            }
+            else {
+                this.#idleTime = 0;
+                IDLE_TIME.style.display = "none";
+            }
         }
 
         requestAnimationFrame(this.#update.bind(this));
@@ -453,7 +460,7 @@ function isInRect(x1, y1, x2, y2, w, h) {
 
 MUSIC.volume = 0.2;
 
-window.onload = () => {
+window.addEventListener("load", () => {
     GAME_ICON.classList.remove("game-icon-loading");
     PLAY_BUTTON.style.display = "block";
     PLAY_BUTTON.addEventListener("click", () => {
@@ -464,9 +471,19 @@ window.onload = () => {
 
         let game = new Game();
         game.start();
-        window.onbeforeunload = game.stop.bind(game);
+        window.addEventListener("beforeunload", game.stop.bind(game));
+
+        function onVisibilityChange(ev) {
+            if (document.hidden || document.webkitHidden || ev.type == "blur" || document.visibilityState != "visible")
+                game.pause();
+            else
+                game.resume();
+        }
+        window.addEventListener("visibilitychange", onVisibilityChange);
+        window.addEventListener("focus", onVisibilityChange);
+        window.addEventListener("blur", onVisibilityChange);
 
         LAND_BUTTON.addEventListener("click", game.land.bind(game));
         CANVAS.addEventListener("click", game.launchCat.bind(game));
     });
-};
+});
