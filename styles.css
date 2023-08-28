@@ -1,5 +1,5 @@
 html {
-    brightness(1.15);
+    filter: brightness(1.15);
 }
 
 body {
